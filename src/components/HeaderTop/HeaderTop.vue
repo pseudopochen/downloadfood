@@ -53,7 +53,7 @@ export default defineComponent({
   text-align: center;
 }
 .header .header_title .header_title_text {
-  font-size: 20px;
+  font-size: 18px;
   color: #fff;
   display: block;
 }

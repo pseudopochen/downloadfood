@@ -6,15 +6,23 @@
 </template>
 
 <script>
-import { defineComponent } from "vue";
+import { defineComponent, onMounted } from "vue";
+import {useStore} from 'vuex';
 import FooterGuide from "./components/FooterGuide/FooterGuide.vue";
+// import {reqFoodCategories} from "./api/index.js";
+
 export default defineComponent({
   name: "App",
   components: {
     FooterGuide,
   },
 
-  setup() {},
+  setup() {
+    onMounted(() => {
+      const store = useStore();
+      store.dispatch("getAddress");
+    });
+  },
 });
 </script>
 

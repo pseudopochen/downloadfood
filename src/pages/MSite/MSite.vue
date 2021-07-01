@@ -1,6 +1,6 @@
 <template>
   <section class="msite">
-    <HeaderTop title="North Springfield Westlake Sunset">
+    <HeaderTop :title="address.name">
       <template v-slot:left>
         <span class="header_search">
           <ion-icon name="search"></ion-icon>
@@ -14,111 +14,29 @@
     </HeaderTop>
 
     <nav class="msite_nav">
-      <div class="swiper-container">
+      <div class="swiper-container" v-if="categoriesArr.length">
         <div class="swiper-wrapper">
-          <div class="swiper-slide">
-            <a href="javascript:;" class="link_to_food">
+          <div
+            class="swiper-slide"
+            v-for="(categories, index) in categoriesArr"
+            :key="index"
+          >
+            <a
+              href="javascript:;"
+              class="link_to_food"
+              v-for="(category, index) in categories"
+              :key="index"
+            >
               <div class="food_container">
-                <img src="./images/nav/1.jpg" />
+                <img :src="baseImgURL + category.image_url" />
               </div>
-              <span>Deserts</span>
-            </a>
-            <a href="javascript:;" class="link_to_food">
-              <div class="food_container">
-                <img src="./images/nav/2.jpg" />
-              </div>
-              <span>Groceries</span>
-            </a>
-            <a href="javascript:" class="link_to_food">
-              <div class="food_container">
-                <img src="./images/nav/3.jpg" />
-              </div>
-              <span>Meals</span>
-            </a>
-            <a href="javascript:" class="link_to_food">
-              <div class="food_container">
-                <img src="./images/nav/4.jpg" />
-              </div>
-              <span>Snacks</span>
-            </a>
-            <a href="javascript:" class="link_to_food">
-              <div class="food_container">
-                <img src="./images/nav/5.jpg" />
-              </div>
-              <span>Promos</span>
-            </a>
-            <a href="javascript:" class="link_to_food">
-              <div class="food_container">
-                <img src="./images/nav/6.jpg" />
-              </div>
-              <span>Delivery</span>
-            </a>
-            <a href="javascript:" class="link_to_food">
-              <div class="food_container">
-                <img src="./images/nav/7.jpg" />
-              </div>
-              <span>Breakfast</span>
-            </a>
-            <a href="javascript:" class="link_to_food">
-              <div class="food_container">
-                <img src="./images/nav/8.jpg" />
-              </div>
-              <span>Recommend</span>
-            </a>
-          </div>
-          <div class="swiper-slide">
-            <a href="javascript:;" class="link_to_food">
-              <div class="food_container">
-                <img src="./images/nav/9.jpg" />
-              </div>
-              <span>Deserts</span>
-            </a>
-            <a href="javascript:;" class="link_to_food">
-              <div class="food_container">
-                <img src="./images/nav/10.jpg" />
-              </div>
-              <span>Groceries</span>
-            </a>
-            <a href="javascript:" class="link_to_food">
-              <div class="food_container">
-                <img src="./images/nav/11.jpg" />
-              </div>
-              <span>Meals</span>
-            </a>
-            <a href="javascript:" class="link_to_food">
-              <div class="food_container">
-                <img src="./images/nav/12.jpg" />
-              </div>
-              <span>Snacks</span>
-            </a>
-            <a href="javascript:" class="link_to_food">
-              <div class="food_container">
-                <img src="./images/nav/13.jpg" />
-              </div>
-              <span>Promos</span>
-            </a>
-            <a href="javascript:" class="link_to_food">
-              <div class="food_container">
-                <img src="./images/nav/14.jpg" />
-              </div>
-              <span>Delivery</span>
-            </a>
-            <a href="javascript:" class="link_to_food">
-              <div class="food_container">
-                <img src="./images/nav/1.jpg" />
-              </div>
-              <span>Breakfast</span>
-            </a>
-            <a href="javascript:" class="link_to_food">
-              <div class="food_container">
-                <img src="./images/nav/2.jpg" />
-              </div>
-              <span>Recommend</span>
+              <span>{{ category.title }}</span>
             </a>
           </div>
         </div>
         <div class="swiper-pagination"></div>
       </div>
+      <img src="./images/msite_back.svg" alt="back" v-else/>
     </nav>
 
     <div class="msite_shop_list">
@@ -133,9 +51,10 @@
 </template>
 
 <script>
-import { defineComponent, onMounted } from "vue";
+import { defineComponent, onMounted, computed, watch, nextTick } from "vue";
 import Swiper from "swiper/bundle"; // MUST use "swiper/bundle" (NOT "swiper") if need pagination
 import "swiper/swiper-bundle.min.css"; // MUST use this style (NOT "swiper.min.css") if need pagination
+import { useStore } from "vuex";
 
 import HeaderTop from "../../components/HeaderTop/HeaderTop.vue";
 import ShopList from "../../components/ShopList/ShopList.vue";
@@ -147,7 +66,30 @@ export default defineComponent({
     ShopList,
   },
   setup() {
-    onMounted(() => {
+    const store = useStore();
+
+    const address = computed(() => store.state.address);
+
+    const categoriesArr = computed(() => {
+      const { categories } = store.state;
+      const numPerPage = 8;
+      const arr = [];
+      let idx = -1;
+      for (let i = 0; i < categories.length; i++) {
+        if (i % numPerPage === 0) {
+          arr.push([]);
+          idx++;
+        }
+        arr[idx].push(categories[i]);
+      }
+
+      return arr;
+    });
+
+    const baseImgURL = "https://fuss10.elemecdn.com";
+
+    watch(categoriesArr, async () => {
+      await nextTick();
       new Swiper(".swiper-container", {
         loop: true,
         pagination: {
@@ -155,6 +97,17 @@ export default defineComponent({
         },
       });
     });
+
+    onMounted(() => {
+      store.dispatch("getCategories");
+      store.dispatch("getShops");
+    });
+
+    return {
+      address,
+      categoriesArr,
+      baseImgURL,
+    };
   },
 });
 </script>
