@@ -91,7 +91,7 @@ export default defineComponent({
   text-align: center;
   flex-direction: column;
   align-items: center;
-  margin: 5px;
+  margin: 1px;
   color: #999999;
 }
 
@@ -100,11 +100,11 @@ export default defineComponent({
 }
 
 .footer_guide .guide_item .item_icon ion-icon {
-  font-size: 28px;
+  font-size: 26px;
 }
 
 .footer_guide .guide_item span {
-  font-size: 14px;
+  font-size: 12px;
 }
 
 a:link {

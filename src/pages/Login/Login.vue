@@ -99,8 +99,10 @@
                 />
                 <img
                   class="get_verification"
-                  src="./images/captcha.svg"
+                  src="http://localhost:4000/captcha"
                   alt="captcha"
+                  @click="getCaptcha"
+                  ref="captchaRef"
                 />
               </section>
             </section>
@@ -127,7 +129,9 @@
 
 <script>
 import { computed, defineComponent, ref } from "vue";
+import { useStore } from "vuex";
 import AlertTip from "../../components/AlertTip/AlertTip.vue";
+import { reqSendCode, reqSmsLogin, reqPwdLogin } from "../../api/index.js";
 
 export default defineComponent({
   name: "Login",
@@ -135,6 +139,8 @@ export default defineComponent({
     AlertTip,
   },
   setup() {
+    const store = useStore();
+
     const loginWay = ref(true);
     const phone = ref("");
     const rightPhone = computed(() => {
@@ -148,15 +154,25 @@ export default defineComponent({
     const name = ref("");
     const captcha = ref("");
 
-    const getCode = () => {
+    let timeIntervalId;
+    const getCode = async () => {
       if (computeTime.value === 0) {
         computeTime.value = 30;
-        const timeIntervalId = setInterval(() => {
+        timeIntervalId = setInterval(() => {
           computeTime.value--;
           if (computeTime.value === 0) {
             clearInterval(timeIntervalId);
           }
         }, 1000);
+
+        const result = await reqSendCode(phone.value);
+        if (result.code === 1) {
+          showAlertBox(result.msg);
+        }
+        if (computeTime.value > 0) {
+          computeTime.value = 0;
+          clearInterval(timeIntervalId);
+        }
       }
     };
 
@@ -168,28 +184,64 @@ export default defineComponent({
       alertText.value = alerttext;
     };
 
-    const login = () => {
+    async function login() {
+      let result;
+
       if (loginWay.value) {
         if (!rightPhone.value) {
           showAlertBox("wrong phone number!");
+          return;
         } else if (!/^\d{6}$/.test(code.value)) {
           showAlertBox("wrong verification code!");
+          return;
         }
+        result = await reqSmsLogin(phone.value, code.value);
       } else {
         if (!name.value) {
           showAlertBox("wrong user name!");
+          return;
         } else if (!pwd.value) {
           showAlertBox("wrong password!");
+          return;
         } else if (!captcha.value) {
           showAlertBox("wrong captcha!");
+          return;
         }
+
+        result = await reqPwdLogin({
+          name: name.value,
+          pwd: pwd.value,
+          captcha: captcha.value,
+        });
       }
-    };
+
+      if (computeTime.value > 0) {
+        computeTime.value = 0;
+        clearInterval(timeIntervalId);
+      }
+
+      if (result.code === 0) {
+        const user = result.data;
+        store.dispatch("recordUser", user);
+        this.$router.replace("/profile");
+      } else {
+        const msg = result.msg;
+        showAlertBox(msg);
+        this.getCaptcha();
+        captcha.value = "";
+      }
+    }
 
     const closeTip = () => {
       showAlert.value = false;
       alertText.value = "";
     };
+
+    function getCaptcha() {
+      // console.log("getCaptcha--this: ", this);
+      this.$refs.captchaRef.src =
+        "http://localhost:4000/captcha?time=" + Date.now();
+    }
 
     return {
       loginWay,
@@ -206,6 +258,7 @@ export default defineComponent({
       getCode,
       login,
       closeTip,
+      getCaptcha,
     };
   },
 });

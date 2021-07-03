@@ -7,7 +7,7 @@
 
 <script>
 import { defineComponent, onMounted } from "vue";
-import {useStore} from 'vuex';
+import { useStore } from "vuex";
 import FooterGuide from "./components/FooterGuide/FooterGuide.vue";
 // import {reqFoodCategories} from "./api/index.js";
 
@@ -21,6 +21,7 @@ export default defineComponent({
     onMounted(() => {
       const store = useStore();
       store.dispatch("getAddress");
+      store.dispatch("getUserInfo");
     });
   },
 });

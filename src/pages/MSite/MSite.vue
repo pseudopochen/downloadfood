@@ -2,14 +2,20 @@
   <section class="msite">
     <HeaderTop :title="address.name">
       <template v-slot:left>
-        <span class="header_search">
+        <router-link class="header_search" to="/search">
           <ion-icon name="search"></ion-icon>
-        </span>
+        </router-link>
       </template>
       <template v-slot:right>
-        <span class="header_login">
-          <span class="header_login_text"> Login </span>
-        </span>
+        <router-link
+          class="header_login"
+          :to="userInfo._id ? '/userinfo' : '/login'"
+        >
+          <span class="header_login_text" v-if="!userInfo._id">Login</span>
+          <span class="header_login_text" v-else
+            ><ion-icon size="large" name="person"></ion-icon
+          ></span>
+        </router-link>
       </template>
     </HeaderTop>
 
@@ -36,7 +42,7 @@
         </div>
         <div class="swiper-pagination"></div>
       </div>
-      <img src="./images/msite_back.svg" alt="back" v-else/>
+      <img src="./images/msite_back.svg" alt="back" v-else />
     </nav>
 
     <div class="msite_shop_list">
@@ -67,6 +73,8 @@ export default defineComponent({
   },
   setup() {
     const store = useStore();
+
+    const userInfo = computed(() => store.state.userInfo);
 
     const address = computed(() => store.state.address);
 
@@ -104,6 +112,7 @@ export default defineComponent({
     });
 
     return {
+      userInfo,
       address,
       categoriesArr,
       baseImgURL,

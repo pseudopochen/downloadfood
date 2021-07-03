@@ -1,22 +1,35 @@
 <template>
   <section class="profile">
     <HeaderTop title="My Info" />
+    <ConfirmPopup></ConfirmPopup>
+    <Toast position="top-center" />
     <section class="profile-number">
-      <router-link to="/login" class="profile-link">
+      <router-link
+        :to="userInfo._id ? '/userinfo' : '/login'"
+        class="profile-link"
+      >
         <div class="profile_image">
           <ion-icon name="person"></ion-icon>
         </div>
         <div class="user-info">
-          <p class="user-info-top">Login / Register</p>
+          <p class="user-info-top" v-if="!userInfo.phone">
+            {{ userInfo.name || "Login / Register" }}
+          </p>
           <p>
             <span class="user-icon" style="margin: 2px">
               <ion-icon name="call-outline"></ion-icon>
             </span>
-            <span class="icon-mobile-number" style="margin: 15px">No phone number</span>
+            <span class="icon-mobile-number" style="margin: 15px">{{
+              userInfo.phone || "No phone number"
+            }}</span>
           </p>
         </div>
         <span class="arrow">
-          <ion-icon class="icon-jiantou1" size="large" name="chevron-forward-outline"></ion-icon>
+          <ion-icon
+            class="icon-jiantou1"
+            size="large"
+            name="chevron-forward-outline"
+          ></ion-icon>
         </span>
       </router-link>
     </section>
@@ -89,18 +102,66 @@
         </div>
       </a>
     </section>
+    <section class="profile_my_order border-1px">
+      <Button
+        label="Logout"
+        class="p-button-danger p-button-raised"
+        style="width: 100%"
+        v-if="userInfo._id"
+        @click="logout"
+      ></Button>
+    </section>
   </section>
 </template>
 
 <script>
-import { defineComponent } from "vue";
+import { computed, defineComponent } from "vue";
+import { useStore } from "vuex";
+import { useConfirm } from "primevue/useconfirm";
+import { useToast } from "primevue/usetoast";
 import HeaderTop from "../../components/HeaderTop/HeaderTop.vue";
 export default defineComponent({
   name: "Profile",
   components: {
     HeaderTop,
   },
-  setup() {},
+  setup() {
+    const store = useStore();
+    const userInfo = computed(() => store.state.userInfo);
+
+    const confirm = useConfirm();
+    const toast = useToast();
+
+    const logout = (event) => {
+      confirm.require({
+        target: event.currentTarget,
+        message: "Are you sure you want to logout?",
+        icon: "pi pi-exclamation-triangle",
+        accept: () => {
+          toast.add({
+            severity: "info",
+            summary: "Confirmed",
+            detail: "You have accepted",
+            life: 3000,
+          });
+          store.dispatch("logout");
+        },
+        reject: () => {
+          toast.add({
+            severity: "error",
+            summary: "Rejected",
+            detail: "You have rejected",
+            life: 3000,
+          });
+        },
+      });
+    };
+
+    return {
+      userInfo,
+      logout,
+    };
+  },
 });
 </script>
 
