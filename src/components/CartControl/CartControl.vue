@@ -1,19 +1,19 @@
 <template>
   <div class="cartcontrol">
     <transition name="move">
-      <ion-icon
-        name="remove-circle-outline"
-        class="icon-remove_circle_outline"
+      <div
+        class="iconfont icon-remove_circle_outline"
         v-if="food.count"
         @click.stop="updateFoodCount(false)"
-      ></ion-icon>
+      ></div>
     </transition>
+
     <div class="cart-count" v-if="food.count">{{ food.count }}</div>
-    <ion-icon
-      name="add-circle"
-      class="icon-add_circle"
+
+    <div
+      class="iconfont icon-icon-addcircle-fill"
       @click.stop="updateFoodCount(true)"
-    ></ion-icon>
+    ></div>
   </div>
 </template>
 
@@ -79,7 +79,7 @@ export default defineComponent({
   color: #93999f;
 }
 
-.cartcontrol .icon-add_circle {
+.cartcontrol .icon-icon-addcircle-fill {
   display: inline-block;
   padding: 6px;
   line-height: 24px;

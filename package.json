@@ -12,6 +12,7 @@
     "axios": "^0.21.1",
     "better-scroll": "^2.4.1",
     "core-js": "^3.6.5",
+    "date-fns": "^2.22.1",
     "mitt": "^3.0.0",
     "mockjs": "^1.1.0",
     "primeicons": "^4.1.0",
@@ -19,6 +20,7 @@
     "swiper": "^6.7.1",
     "vue": "^3.0.0",
     "vue-router": "^4.0.10",
+    "vue3-lazyload": "^0.2.2-beta",
     "vuex": "^4.0.2"
   },
   "devDependencies": {

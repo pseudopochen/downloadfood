@@ -3,7 +3,8 @@
     <HeaderTop :title="address.name">
       <template v-slot:left>
         <router-link class="header_search" to="/search">
-          <ion-icon name="search"></ion-icon>
+          <!-- <ion-icon name="search"></ion-icon> -->
+          <i class="iconfont icon-search"></i>
         </router-link>
       </template>
       <template v-slot:right>
@@ -12,9 +13,10 @@
           :to="userInfo._id ? '/userinfo' : '/login'"
         >
           <span class="header_login_text" v-if="!userInfo._id">Login</span>
-          <span class="header_login_text" v-else
-            ><ion-icon size="large" name="person"></ion-icon
-          ></span>
+          <span class="header_login_text" v-else>
+            <!-- <ion-icon size="large" name="person"></ion-icon> -->
+            <i class="iconfont icon-ProfileHili" style="fontSize: 24px"></i>
+          </span>
         </router-link>
       </template>
     </HeaderTop>
@@ -28,6 +30,7 @@
             :key="index"
           >
             <a
+              style="textDecoration: none"
               href="javascript:;"
               class="link_to_food"
               v-for="(category, index) in categories"
@@ -47,7 +50,8 @@
 
     <div class="msite_shop_list">
       <div class="shop_header">
-        <ion-icon size="large" name="reorder-three-outline"></ion-icon>
+        <!-- <ion-icon size="large" name="reorder-three-outline"></ion-icon> -->
+        <i class="iconfont icon-reorder-three-outline"></i>
         <span class="shop_header_title">Nearby Shops</span>
       </div>
 
@@ -216,7 +220,7 @@ export default defineComponent({
   justify-content: flex-start;
   padding: 10px 10px 0;
 }
-.msite_shop_list .shop_header ion-icon {
+.msite_shop_list .shop_header .iconfont {
   margin-left: 5px;
   color: #999;
 }

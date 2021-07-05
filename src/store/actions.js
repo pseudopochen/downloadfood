@@ -10,6 +10,7 @@ import {
   INCREMENT_FOOD_COUNT,
   DECREMENT_FOOD_COUNT,
   CLEAR_CART,
+  RECEIVE_SEARCH_SHOPS,
 } from "./mutation-types";
 import {
   reqAddress,
@@ -20,6 +21,7 @@ import {
   reqShopGoods,
   reqShopInfo,
   reqShopRatings,
+  reqSearchShop,
 } from "../api";
 
 const actions = {
@@ -76,13 +78,15 @@ const actions = {
     }
   },
 
-  async getShopRatings({ commit }) {
+  async getShopRatings({ commit }, callback) {
     const result = await reqShopRatings();
     if (result.code === 0) {
       const ratings = result.data;
       commit(RECEIVE_RATINGS, { ratings });
+      callback && callback();
     }
   },
+
   async getShopGoods({ commit }, callback) {
     const result = await reqShopGoods();
     if (result.code === 0) {
@@ -100,9 +104,18 @@ const actions = {
     }
   },
 
-  clearCart({commit}) {
-    commit(CLEAR_CART)
-  }
+  clearCart({ commit }) {
+    commit(CLEAR_CART);
+  },
+
+  async searchShops({ commit, state }, keyword) {
+    const geohash = state.latitude + "," + state.longitude;
+    const result = await reqSearchShop(geohash, keyword);
+    if (result.code === 0) {
+      const searchShops = result.data;
+      commit(RECEIVE_SEARCH_SHOPS, { searchShops });
+    }
+  },
 };
 
 export default actions;

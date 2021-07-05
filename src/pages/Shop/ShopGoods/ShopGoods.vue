@@ -142,6 +142,7 @@ export default defineComponent({
     };
 
     onMounted(() => {
+      console.log("ShopGoods-onMounted...");
       store.dispatch("getShopGoods", async () => {
         await nextTick();
         _initScroll();

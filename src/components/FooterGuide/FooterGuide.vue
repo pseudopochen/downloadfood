@@ -7,7 +7,8 @@
       @click="goTo('/msite')"
     >
       <span class="item_icon">
-        <ion-icon name="fast-food"></ion-icon>
+        <i class="iconfont icon-fast-food"></i>
+        <!-- <ion-icon name="fast-food"></ion-icon> -->
       </span>
       <span>Delivery</span>
     </a>
@@ -18,7 +19,8 @@
       @click="goTo('/search')"
     >
       <span class="item_icon">
-        <ion-icon name="search"></ion-icon>
+        <!-- <ion-icon name="search"></ion-icon> -->
+        <i class="iconfont icon-search"></i>
       </span>
       <span>Search</span>
     </a>
@@ -29,7 +31,8 @@
       @click="goTo('/order')"
     >
       <span class="item_icon">
-        <ion-icon name="notifications"></ion-icon>
+        <!-- <ion-icon name="notifications"></ion-icon> -->
+        <i class="iconfont icon-dingdan"></i>
       </span>
       <span>Order</span>
     </a>
@@ -40,7 +43,8 @@
       @click="goTo('/profile')"
     >
       <span class="item_icon">
-        <ion-icon name="person"></ion-icon>
+        <!-- <ion-icon name="person"></ion-icon> -->
+        <i class="iconfont icon-ProfileHili"></i>
       </span>
       <span>Profile</span>
     </a>
@@ -99,12 +103,14 @@ export default defineComponent({
   color: #02a774;
 }
 
-.footer_guide .guide_item .item_icon ion-icon {
-  font-size: 26px;
+.footer_guide .guide_item .item_icon .iconfont {
+  font-size: 22px;
 }
 
 .footer_guide .guide_item span {
   font-size: 12px;
+  margin-top: 2px;
+  margin-bottom: 2px;
 }
 
 a:link {

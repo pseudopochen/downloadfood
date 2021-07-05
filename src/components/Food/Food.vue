@@ -2,10 +2,11 @@
   <div class="food" v-if="isShow">
     <div class="food-content">
       <div class="image-header">
-        <img :src="food.image" />
+        <img v-lazy="food.image" />
         <p class="foodpanel-desc">{{ food.info }}</p>
         <div class="back" @click="toggleShow">
-          <ion-icon size="large" name="chevron-back-outline"></ion-icon>
+          <!-- <ion-icon size="large" name="chevron-back-outline"></ion-icon> -->
+          <i class="iconfont icon-chevronleft icon-arrow_left"></i>
         </div>
       </div>
       <div class="content">

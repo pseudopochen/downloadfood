@@ -112,11 +112,12 @@
         <a href="javascript:;" class="about_us">About Us</a>
       </div>
       <a href="javascript:;" class="go_back" @click="$router.back()">
-        <ion-icon
+        <i class="iconfont icon-chevronleft icon-jiantou2"></i>
+        <!-- <ion-icon
           class="icon-jiantou2"
           size="large"
           name="chevron-back-outline"
-        ></ion-icon>
+        ></ion-icon> -->
       </a>
     </div>
     <AlertTip
@@ -491,14 +492,15 @@ export default defineComponent({
 
 .loginContainer .loginInner .go_back {
   position: absolute;
-  top: 5px;
-  left: 5px;
+  top: 15px;
+  left: 15px;
   width: 30px;
   height: 30px;
+  text-decoration: none;
 }
 
 .loginContainer .loginInner .go_back > .icon-jiantou2 {
-  font-size: 20px;
+  font-size: 26px;
   color: #999;
 }
 </style>

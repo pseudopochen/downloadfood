@@ -9,7 +9,8 @@
         class="profile-link"
       >
         <div class="profile_image">
-          <ion-icon name="person"></ion-icon>
+          <!-- <ion-icon name="person"></ion-icon> -->
+          <i class="iconfont icon-ProfileHili"></i>
         </div>
         <div class="user-info">
           <p class="user-info-top" v-if="!userInfo.phone">
@@ -17,7 +18,8 @@
           </p>
           <p>
             <span class="user-icon" style="margin: 2px">
-              <ion-icon name="call-outline"></ion-icon>
+              <!-- <ion-icon name="call-outline"></ion-icon> -->
+              <i class="iconfont icon-shouji icon-mobile"></i>
             </span>
             <span class="icon-mobile-number" style="margin: 15px">{{
               userInfo.phone || "No phone number"
@@ -25,11 +27,12 @@
           </p>
         </div>
         <span class="arrow">
-          <ion-icon
+          <i class="iconfont icon-chevronright icon-jiantou1"></i>
+          <!-- <ion-icon
             class="icon-jiantou1"
             size="large"
             name="chevron-forward-outline"
-          ></ion-icon>
+          ></ion-icon> -->
         </span>
       </router-link>
     </section>
@@ -192,7 +195,7 @@ export default defineComponent({
   overflow: hidden;
   vertical-align: top;
 }
-.profile .profile-number .profile-link .profile_image ion-icon {
+.profile .profile-number .profile-link .profile_image .iconfont {
   background: #e4e4e4;
   font-size: 62px;
 }
@@ -216,7 +219,7 @@ export default defineComponent({
   width: 20px;
   height: 20px;
 }
-.profile .profile-number .profile-link .user-info p .user-icon ion-icon {
+.profile .profile-number .profile-link .user-info p .user-icon .icon-mobile {
   font-size: 30px;
   vertical-align: text-top;
 }

@@ -2,8 +2,8 @@
   <div class="shop-header">
     <nav class="shop-nav" :style="{ backgroundImage: `url(${info.bgImg})` }">
       <a class="back" @click="$router.back()">
-        <!-- <i class="iconfont icon-arrow_left"></i> -->
-        <ion-icon size="large" name="chevron-back-outline"></ion-icon>
+        <i class="iconfont icon-chevronleft icon-arrow_left"></i>
+        <!-- <ion-icon size="large" name="chevron-back-outline"></ion-icon> -->
       </a>
     </nav>
 
@@ -87,8 +87,8 @@
             {{ info.bulletin }}
           </div>
           <div class="mask-footer" @click="toggleShopShow">
-            <!-- <span class="iconfont icon-close"></span> -->
-            <ion-icon size="large" name="close-circle-outline"></ion-icon>
+            <span class="iconfont icon-close"></span>
+            <!-- <ion-icon size="large" name="close-circle-outline"></ion-icon> -->
           </div>
         </div>
         <div class="brief-modal-cover"></div>
@@ -113,8 +113,8 @@
             </li>
           </ul>
           <div class="activity-sheet-close" @click="toggleSupportShow">
-            <!-- <span class="iconfont icon-close"></span> -->
-            <ion-icon size="large" name="close-circle-outline"></ion-icon>
+            <span class="iconfont icon-close"></span>
+            <!-- <ion-icon size="large" name="close-circle-outline"></ion-icon> -->
           </div>
         </div>
         <div class="activity-sheet-cover"></div>
@@ -544,7 +544,7 @@ export default defineComponent({
 }
 
 .shop-header .shop-brief-modal .brief-modal-content .mask-footer span {
-  font-size: 16px;
+  font-size: 36px;
   color: rgba(255, 255, 255, 0.7);
 }
 
@@ -657,7 +657,7 @@ export default defineComponent({
 
 .shop-header .activity-sheet .activity-sheet-content .activity-sheet-close {
   position: absolute;
-  right: 6px;
+  right: 16px;
   top: 10px;
   width: 25px;
   height: 25px;
@@ -668,7 +668,7 @@ export default defineComponent({
   .activity-sheet-content
   .activity-sheet-close
   > span {
-  font-size: 20px;
+  font-size: 30px;
 }
 
 .shop-header .activity-sheet .activity-sheet-cover {

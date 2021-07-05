@@ -7,7 +7,6 @@
         <div class="content-left" @click="toggleShow">
           <div class="logo-wrapper">
             <div class="logo" :class="{ highlight: totalCount }">
-                <!-- <ion-icon name="cart" class="icon-Shoppingcart" :class="{ highlight: totalCount }"></ion-icon> -->
               <i
                 class="iconfont icon-Shoppingcart"
                 :class="{ highlight: totalCount }"

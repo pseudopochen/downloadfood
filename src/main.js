@@ -13,6 +13,8 @@ import "primevue/resources/themes/saga-blue/theme.css";
 import "primevue/resources/primevue.min.css";
 import "primeicons/primeicons.css";
 
+import VueLazyLoad from "vue3-lazyload";
+import loading from "./common/imgs/loading.gif";
 import "./mock/mockServer";
 
 createApp(App)
@@ -21,6 +23,7 @@ createApp(App)
   .use(PrimeVue)
   .use(ToastService)
   .use(ConfirmationService)
+  .use(VueLazyLoad, { loading })
   .component("Button", Button)
   .component("Toast", Toast)
   .component("ConfirmPopup", ConfirmPopup)

@@ -2,15 +2,19 @@
   <ShopHeader />
   <div class="tab">
     <div class="tab-item">
-      <router-link to="/shop/goods">Order</router-link>
+      <router-link to="/shop/goods" replace>Order</router-link>
     </div>
     <div class="tab-item">
-      <router-link to="/shop/ratings">Rating</router-link>
+      <router-link to="/shop/ratings" replace>Rating</router-link>
     </div>
     <div class="tab-item">
-      <router-link to="/shop/info">Info</router-link>
+      <router-link to="/shop/info" replace>Info</router-link>
     </div>
-    <router-view></router-view>
+    <router-view v-slot={Component}>
+      <keep-alive> 
+        <component :is="Component"/>
+      </keep-alive>
+    </router-view>
   </div>
 </template>
 

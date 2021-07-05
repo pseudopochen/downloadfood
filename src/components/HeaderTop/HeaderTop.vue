@@ -31,6 +31,7 @@ export default defineComponent({
   width: 100%;
   height: 45px;
 }
+
 .header .header_search {
   position: absolute;
   left: 15px;
@@ -38,11 +39,14 @@ export default defineComponent({
   transform: translateY(-50%);
   width: 10%;
   height: 50%;
+  text-decoration: none;
 }
-.header .header_search ion-icon {
+
+.header .header_search .icon-search {
   font-size: 25px;
   color: #fff;
 }
+
 .header .header_title {
   position: absolute;
   top: 50%;
@@ -52,21 +56,24 @@ export default defineComponent({
   color: #fff;
   text-align: center;
 }
+
 .header .header_title .header_title_text {
   font-size: 18px;
   color: #fff;
   display: block;
 }
+
 .header .header_login {
-  font-size: 14px;
   color: #fff;
   position: absolute;
   right: 15px;
   top: 50%;
   transform: translateY(-50%);
+  text-decoration: none;
+  font-size: 16px;
 }
+
 .header .header_login .header_login_text {
   color: #fff;
 }
-
 </style>
