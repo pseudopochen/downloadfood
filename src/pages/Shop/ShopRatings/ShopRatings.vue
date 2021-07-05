@@ -110,7 +110,6 @@ import {
   ref,
   reactive,
   watch,
-  onMounted,
   nextTick,
 } from "vue";
 import { useStore } from "vuex";
@@ -150,22 +149,27 @@ export default defineComponent({
       // console.log("ratings: ", ratings);
     }
 
-    onMounted(async () => {
-      await nextTick();
-      new BetterScroll(".ratings", {
-        movable: true,
-        zoom: true,
-        click: true,
-      }).refresh();
-    });
+    let bs;
+    // onMounted(async () => {
+    //   await nextTick();
+    //   bs = new BetterScroll(".ratings", {
+    //     movable: true,
+    //     zoom: true,
+    //     click: true,
+    //   }).refresh();
+    // });
 
     watch(ratings, async () => {
       await nextTick();
-      new BetterScroll(".ratings", {
-        movable: true,
-        zoom: true,
-        click: false,
-      }).refresh();
+      if (!bs) {
+        bs = new BetterScroll(".ratings", {
+          movable: true,
+          zoom: true,
+          click: true,
+        }).refresh();
+      } else {
+        bs.refresh();
+      }
     });
 
     const positiveSize = computed(() => store.getters["positiveSize"]);
