@@ -133,7 +133,7 @@ export default defineComponent({
   float: left;
   width: 200px;
   color: #333;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 16px;
   font-weight: 700;
 }

@@ -164,7 +164,7 @@ export default defineComponent({
       new BetterScroll(".ratings", {
         movable: true,
         zoom: true,
-        click: true,
+        click: false,
       }).refresh();
     });
 
