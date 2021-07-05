@@ -38,14 +38,18 @@ Image lazy-load by using "vue3-lazyload".
 ### Notes on keep-alive:
 
 The syntax for caching router components has changed significantly from Vue 2.x to Vue 3. In Vue 2.x, it is relatively straightforward:
+```
 <keep-alive>
     <router-view></router-view>
 </keep-alive>
+```
 But in Vue 3, the keep-alive must wrap a dynamic component, with its "is" property value given by the router-view:
+```
 <router-view v-slot="{Component}">
     <keep-alive>
         <component :is="Component"></component>
     </keep-alive>
 </router-view>
+```
 Checkout the stack-overflow post: https://stackoverflow.com/questions/65619181/how-to-make-certain-component-keep-alive-with-router-view-in-vue-3
 
