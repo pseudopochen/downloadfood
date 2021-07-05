@@ -34,7 +34,7 @@
             :class="{ active: selectType === 2 }"
             @click="setSelectType(2)"
           >
-            全部<span class="count">{{ totalLength }}</span>
+            全部<span class="count">{{ ratings.length }}</span>
           </span>
           <span
             class="block positive"
@@ -48,7 +48,7 @@
             :class="{ active: selectType === 1 }"
             @click="setSelectType(1)"
           >
-            不满意<span class="count">{{ totalLength - positiveSize }}</span>
+            不满意<span class="count">{{ ratings.length - positiveSize }}</span>
           </span>
         </div>
         <div
@@ -104,14 +104,7 @@
 </template>
 
 <script>
-import {
-  computed,
-  defineComponent,
-  ref,
-  reactive,
-  watch,
-  nextTick,
-} from "vue";
+import { computed, defineComponent, ref, watch, nextTick } from "vue";
 import { useStore } from "vuex";
 import BetterScroll from "better-scroll";
 // import moment from "moment";
@@ -126,17 +119,24 @@ export default defineComponent({
   },
   setup() {
     const store = useStore();
-    const ratings = reactive([]);
-
+    // const ratings = reactive([]);
+    
+    const ratings = computed({
+      get() {
+        return store.state.ratings;
+      },
+      set() {},
+    });
+    //const ratings = computed(() => store.state.ratings);
     store.dispatch("getShopRatings", () => {
-      Object.assign(ratings, store.state.ratings);
+      // Object.assign(ratings, store.state.ratings);
     });
 
     // using ratings.length in template does not work, must set up totalLength ref and watch it
-    const totalLength = ref(0);
-    watch(ratings, () => {
-      totalLength.value = ratings.length;
-    });
+    // const totalLength = ref(0);
+    // watch(ratings, () => {
+    //   totalLength.value = ratings.length;
+    // });
 
     const info = computed(() => store.state.info);
     // const ratings = computed(() => store.state.ratings);
@@ -197,7 +197,7 @@ export default defineComponent({
     return {
       info,
       ratings,
-      totalLength,
+      // totalLength,
       positiveSize,
       filterRatings,
       onlyShowText,
