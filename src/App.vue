@@ -1,26 +1,38 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div id="app">
+    <router-view />
+    <FooterGuide v-show="$route.meta.showFooter" />
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import { defineComponent, onMounted } from "vue";
+import { useStore } from "vuex";
+import FooterGuide from "./components/FooterGuide/FooterGuide.vue";
+// import {reqFoodCategories} from "./api/index.js";
 
-export default {
-  name: 'App',
+export default defineComponent({
+  name: "App",
   components: {
-    HelloWorld
-  }
-}
+    FooterGuide,
+  },
+
+  setup() {
+    onMounted(() => {
+      const store = useStore();
+      store.dispatch("getAddress");
+      store.dispatch("getUserInfo");
+    });
+  },
+});
 </script>
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  width: 100%;
+  height: 100%;
+  background: #f5f5f5;
+  position: relative;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
 }
 </style>
